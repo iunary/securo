@@ -1,11 +1,15 @@
+import base64
+import hashlib
 import os
 import tempfile
 import unittest
+from unittest import mock
 
 from cryptography.fernet import Fernet
 
 from securo.file_manager import FileManager
 from securo.securo import Decryptor, Encryptor
+from securo.utils import get_encryption_key, secure_key
 
 
 class SecuroTest(unittest.TestCase):
@@ -85,6 +89,16 @@ class SecuroTest(unittest.TestCase):
 
         self.assertEqual(data1, decrypted_data1)
         self.assertEqual(data2, decrypted_data2)
+
+    def test_secure_key(self):
+        key = b"key"
+        expected = hashlib.md5(key).hexdigest().encode()
+        self.assertEqual(secure_key(key=key), expected)
+
+    @mock.patch("getpass.getpass", return_value="key")
+    def test_get_encryption_key(self, mock_getpass):
+        key = base64.urlsafe_b64encode(secure_key(b"key"))
+        self.assertEqual(get_encryption_key(), key)
 
 
 if __name__ == "__main__":

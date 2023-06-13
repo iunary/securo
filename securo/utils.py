@@ -18,7 +18,7 @@ def secure_key(key: bytes) -> bytes:
     return hlib.hexdigest().encode()
 
 
-def get_encryption_key() -> str:
+def get_encryption_key() -> bytes:
     """Get the encryption key
 
     Returns:

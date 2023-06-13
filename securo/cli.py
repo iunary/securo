@@ -1,5 +1,4 @@
 """Securo cli"""
-from __future__ import absolute_import
 
 import os
 
@@ -54,7 +53,7 @@ def main():
     try:
         app()
     except KeyboardInterrupt:
-        typer.echo("Operation interrupted key user", err=True)
+        typer.echo("Operation interrupted by the user", err=True)
 
 
 if __name__ == "__main__":
